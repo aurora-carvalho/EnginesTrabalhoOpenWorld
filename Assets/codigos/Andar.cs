@@ -8,12 +8,14 @@ public class Andar : MonoBehaviour
     public float velocidade;
     public LayerMask camada;
     public float altura;
+    public static Vector3 posicaojogador;
 
     Rigidbody rb;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     private void FixedUpdate()
@@ -37,7 +39,10 @@ public class Andar : MonoBehaviour
 
         RaycastHit hit;
         if (Physics.Raycast(transform.position, Vector3.down, out hit, Mathf.Infinity, camada))
+        {
+            posicaojogador = hit.point;
             posi.y = hit.point.y + altura;
+        }
 
         transform.position = new Vector3(transform.position.x, posi.y, transform.position.z);
     }
